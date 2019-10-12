@@ -1,4 +1,4 @@
-package com.lms.pojo;
+package com.lms.ss.pojo;
 
 public class Author {
 	private Integer authorId;

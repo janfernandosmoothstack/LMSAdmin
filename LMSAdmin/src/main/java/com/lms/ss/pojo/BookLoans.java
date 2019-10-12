@@ -1,4 +1,4 @@
-package com.lms.pojo;
+package com.lms.ss.pojo;
 
 import java.util.Date;
 
