@@ -3,8 +3,8 @@ package com.lms.LMSAdmin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.lms.ss.dao.AuthorDao;
-import com.lms.ss.service.AuthorService;
+import com.lms.LMSAdmin.dao.AuthorDao;
+import com.lms.LMSAdmin.service.AuthorService;
 
 @Configuration
 public class BeanConfig {

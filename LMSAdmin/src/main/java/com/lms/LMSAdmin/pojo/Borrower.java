@@ -1,4 +1,4 @@
-package com.lms.ss.pojo;
+package com.lms.LMSAdmin.pojo;
 
 public class Borrower {
 	private Integer cardNo;

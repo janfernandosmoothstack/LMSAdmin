@@ -1,4 +1,4 @@
-package com.lms.ss.controller;
+package com.lms.LMSAdmin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lms.ss.pojo.Author;
-import com.lms.ss.service.AuthorService;
+import com.lms.LMSAdmin.pojo.Author;
+import com.lms.LMSAdmin.service.AuthorService;
 
 @RestController
 public class AuthorController {

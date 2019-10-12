@@ -1,6 +1,6 @@
-package com.lms.ss.dao;
+package com.lms.LMSAdmin.dao;
 
-import com.lms.ss.pojo.Author;
+import com.lms.LMSAdmin.pojo.Author;
 
 public class AuthorDao {
 	public Author getAuthorById(int authorId) {

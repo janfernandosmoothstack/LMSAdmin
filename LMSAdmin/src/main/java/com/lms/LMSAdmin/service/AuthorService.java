@@ -1,9 +1,9 @@
-package com.lms.ss.service;
+package com.lms.LMSAdmin.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.lms.ss.dao.AuthorDao;
-import com.lms.ss.pojo.Author;
+import com.lms.LMSAdmin.dao.AuthorDao;
+import com.lms.LMSAdmin.pojo.Author;
 
 public class AuthorService {
 	
