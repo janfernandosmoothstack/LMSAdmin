@@ -1,7 +1,6 @@
 package com.lms.LMSAdmin.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.lms.LMSAdmin.pojo.Publisher;
 
 @Component
-public class PublisherDao {
+public class PublisherDao extends Dao {
 	
 	//Insert Pub record
 	public void insertPub(String pubName, String pubAddress, String pubPhone) {
@@ -97,18 +96,5 @@ public class PublisherDao {
         }
 		
 		return pubList;
-	}
-	
-	public Connection getCon() {
-		Connection con = null;
-		
-		try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","Iamsherlocked#2.0");
-            
-  		} catch(SQLException e) {
-			System.out.println(e);
-        } 	
-		
-		return con;
 	}
 }

@@ -26,33 +26,15 @@ public class OverrideService {
 	}
 	
 	//Validate Id's
-	public boolean ifBorrExists(int cardNo, int bookId, int branchId) {
+	public boolean ifExists(int cardNo, int bookId, int branchId) {
 		List<BookLoans> list = overDao.getBookLoans();
 		boolean exists = false;
 		
 		//Check if the cardNo exists
 		exists = list.stream()
-				.anyMatch(id -> id.getBorrower().getCardNo().equals(cardNo));
-		
-		if(exists == false) {
-			return exists;
-		} else {
-			//Check if the bookId exists
-			exists = list.stream()
-					.anyMatch(id -> id.getBook().getBookId().equals(bookId));
-			
-			if(exists == false) {
-				return exists;
-			} else {
-				//Check if the branchId exists
-				exists = list.stream()
-						.anyMatch(id -> id.getBranch().getBranchId().equals(branchId));
-				
-				if(exists = false) {
-					return exists;
-				}
-			}
-		}
+				.anyMatch(id -> id.getBorrower().getCardNo().equals(cardNo) &&
+						id.getBranch().getBranchId().equals(branchId) &&
+						id.getBook().getBookId().equals(bookId));
 	
 		return exists;
 	}

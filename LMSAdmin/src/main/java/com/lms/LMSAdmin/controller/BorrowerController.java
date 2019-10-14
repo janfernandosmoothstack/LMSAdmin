@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,34 +15,56 @@ import com.lms.LMSAdmin.pojo.Borrower;
 import com.lms.LMSAdmin.service.BorrowerService;
 
 @RestController
+@RequestMapping("/LMSAdmin/borrower")
 public class BorrowerController {
 	
 	@Autowired
 	BorrowerService borrService;
 	
 	//Create a record
-	@RequestMapping(value = "/lmsAdmin/menu/5/borrMenu/1/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", method = {RequestMethod.POST, RequestMethod.GET})
-	@ResponseStatus(code = HttpStatus.CREATED, reason = "Borrower record created.")
-	public void insertBorr(@PathVariable("name") String borrName, @PathVariable("address") String borrAddress, @PathVariable("phone") String borrPhone) {
+	@RequestMapping(value = "/create/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
+			method = {RequestMethod.POST, RequestMethod.GET})
+	
+	public ResponseEntity<String> insertBorr(@PathVariable("name") String borrName, @PathVariable("address") String borrAddress, 
+			@PathVariable("phone") String borrPhone) {
+		
 		borrService.insertBorr(borrName, borrAddress, borrPhone);
+		return new ResponseEntity<String>("Borrower record created.", HttpStatus.CREATED);
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/lmsAdmin/menu/5/borrMenu/2/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", method = {RequestMethod.PUT, RequestMethod.GET})
-	@ResponseStatus(code = HttpStatus.OK, reason = "Borrower record updated.")
-	public void updateBorr(@PathVariable("cardNo") int cardNo, @PathVariable("name") String borrName, @PathVariable("address") String borrAddress, @PathVariable("phone") String borrPhone) {
-		borrService.updateBorr(cardNo, borrName, borrAddress, borrPhone);
+	@RequestMapping(value = "/update/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
+			method = {RequestMethod.PUT, RequestMethod.GET})
+	
+	public ResponseEntity<String> updateBorr(@PathVariable("cardNo") int cardNo, @PathVariable("name") String borrName, 
+			@PathVariable("address") String borrAddress, @PathVariable("phone") String borrPhone) {
+		
+		boolean checkId = borrService.ifExists(cardNo);
+		
+		if(checkId == true) {
+			borrService.updateBorr(cardNo, borrName, borrAddress, borrPhone);
+			return new ResponseEntity<String>("Borrower record updated.", HttpStatus.ACCEPTED);
+		}else {
+			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/lmsAdmin/menu/5/borrMenu/3/cardNo/{cardNo}", method = {RequestMethod.DELETE, RequestMethod.GET})
-	@ResponseStatus(code = HttpStatus.NO_CONTENT, reason = "Borrower record deleted.")
-	public void deleteBorr(@PathVariable("cardNo") int cardNo) {
-		borrService.deleteBorr(cardNo);
+	@RequestMapping(value = "/delete/cardNo/{cardNo}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	public ResponseEntity<String> deleteBorr(@PathVariable("cardNo") int cardNo) {
+				
+		boolean checkId = borrService.ifExists(cardNo);
+		
+		if(checkId == true) {
+			borrService.deleteBorr(cardNo);
+			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+		}else {
+			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	//View all records
-	@RequestMapping(value = "/lmsAdmin/menu/5/borrMenu/4", method = RequestMethod.GET)
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Borrower> getAllBorrs() {
 		return borrService.getAllBorrs();

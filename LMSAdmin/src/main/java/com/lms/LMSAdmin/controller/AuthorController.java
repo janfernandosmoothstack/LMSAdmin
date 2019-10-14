@@ -15,14 +15,14 @@ import com.lms.LMSAdmin.pojo.Author;
 import com.lms.LMSAdmin.service.AuthorService;
 
 @RestController
-@RequestMapping("/lmsAdmin/menu/authMenu")
+@RequestMapping("/lmsAdmin/author")
 public class AuthorController {
 	
 	@Autowired
 	AuthorService authorService;
 	
 	//Create a record
-	@RequestMapping(value = "/create/authName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/create/authorName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET})
 	public ResponseEntity<String> insertAuthor(@PathVariable String authorName) {
 		
 		authorService.insertAuthor(authorName);
@@ -30,7 +30,7 @@ public class AuthorController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/update/authId/{authorId}/authName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET})
+	@RequestMapping(value = "/update/authorId/{authorId}/authorName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET})
 	public ResponseEntity<String> updateAuthor(@PathVariable("authorId") int authorId, @PathVariable("authorName") String authorName) {
 		
 		boolean checkId = authorService.ifExists(authorId);
@@ -44,14 +44,14 @@ public class AuthorController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/delete/authId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/delete/authorId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET})
 	public ResponseEntity<String> deleteAuthor(@PathVariable int authorId) {
 		
 		boolean checkId = authorService.ifExists(authorId);
 		
 		if(checkId == true) {
 			authorService.deleteAuthor(authorId);
-			return new ResponseEntity<String>("Author record deleted.", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 		}else {
 			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
 		}

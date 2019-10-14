@@ -1,7 +1,6 @@
 package com.lms.LMSAdmin.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.lms.LMSAdmin.pojo.Borrower;
 
 @Component
-public class BorrowerDao {
+public class BorrowerDao extends Dao{
 	
 	//Insert Borrower record
 	public void insertBorr(String borrName, String borrAddress, String borrPhone) {
@@ -96,18 +95,5 @@ public class BorrowerDao {
         }
 		
 		return borrList;
-	}
-	
-	public Connection getCon() {
-		Connection con = null;
-		
-		try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","Iamsherlocked#2.0");
-            
-  		} catch(SQLException e) {
-			System.out.println(e);
-        } 	
-		
-		return con;
 	}
 }

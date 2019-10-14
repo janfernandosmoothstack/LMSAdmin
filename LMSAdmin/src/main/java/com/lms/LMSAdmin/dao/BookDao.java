@@ -1,7 +1,6 @@
 package com.lms.LMSAdmin.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ import com.lms.LMSAdmin.pojo.Book;
 import com.lms.LMSAdmin.pojo.Publisher;
 
 @Component
-public class BookDao {
+public class BookDao extends Dao{
 	
 	@Autowired
 	AuthorDao authDao;
@@ -130,18 +129,5 @@ public class BookDao {
         }
 		
 		return bookList;
-	}
-	
-	public Connection getCon() {
-		Connection con = null;
-		
-		try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","Iamsherlocked#2.0");
-            
-  		} catch(SQLException e) {
-			System.out.println(e);
-        } 	
-		
-		return con;
 	}
 }

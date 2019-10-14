@@ -2,7 +2,6 @@ package com.lms.LMSAdmin.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +16,7 @@ import com.lms.LMSAdmin.pojo.Borrower;
 import com.lms.LMSAdmin.pojo.LibraryBranch;
 
 @Component
-public class OverrideDao {
+public class OverrideDao extends Dao {
 	
 	//Override the due date
 	public void overrideDueDate(int cardNo, int bookId, int branchId, Date currDueDate, int days) {
@@ -109,18 +108,5 @@ public class OverrideDao {
         }
 		
 		return list;
-	}
-	
-	public Connection getCon() {
-		Connection con = null;
-		
-		try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","Iamsherlocked#2.0");
-            
-  		} catch(SQLException e) {
-			System.out.println(e);
-        } 	
-		
-		return con;
 	}
 }
