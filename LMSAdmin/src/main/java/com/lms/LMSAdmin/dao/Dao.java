@@ -12,7 +12,7 @@ public class Dao {
 		Connection con = null;
 		
 		try {
-            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","******");
+            con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","*****");
             
   		} catch(SQLException e) {
 			System.out.println(e);

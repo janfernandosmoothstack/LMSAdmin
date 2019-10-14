@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,10 @@ import com.lms.LMSAdmin.pojo.Publisher;
 import com.lms.LMSAdmin.service.PublisherService;
 
 @RestController
-@RequestMapping("/lmsAdmin/publisher")
+@RequestMapping(value = "/LMSAdmin/publisher",
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
 public class PublisherController {
 
 	@Autowired

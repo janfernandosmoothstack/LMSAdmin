@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,9 @@ import com.lms.LMSAdmin.pojo.Borrower;
 import com.lms.LMSAdmin.service.BorrowerService;
 
 @RestController
-@RequestMapping("/LMSAdmin/borrower")
+@RequestMapping(value = "/LMSAdmin/borrower",
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class BorrowerController {
 	
 	@Autowired
@@ -43,7 +46,7 @@ public class BorrowerController {
 		
 		if(checkId == true) {
 			borrService.updateBorr(cardNo, borrName, borrAddress, borrPhone);
-			return new ResponseEntity<String>("Borrower record updated.", HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>("Borrower record updated.", HttpStatus.OK);
 		}else {
 			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
 		}

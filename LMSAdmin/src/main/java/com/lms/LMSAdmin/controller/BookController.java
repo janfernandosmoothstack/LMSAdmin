@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,10 @@ import com.lms.LMSAdmin.service.BookService;
 import com.lms.LMSAdmin.service.PublisherService;
 
 @RestController
-@RequestMapping("/LMSAdmin/book")
+@RequestMapping(value = "/LMSAdmin/book",
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
 public class BookController {
 	
 	@Autowired
@@ -67,7 +71,7 @@ public class BookController {
 				
 				if(checkId == true) {
 					bookService.updateBook(bookId, title, authId, pubId);
-					return new ResponseEntity<String>("Book record updated.", HttpStatus.ACCEPTED);
+					return new ResponseEntity<String>("Book record updated.", HttpStatus.OK);
 				}else {
 					return new ResponseEntity<String>("Invalid publisher ID.", HttpStatus.NOT_FOUND);
 				}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,10 @@ import com.lms.LMSAdmin.pojo.LibraryBranch;
 import com.lms.LMSAdmin.service.LibraryBranchService;
 
 @RestController
-@RequestMapping("/LMSAdmin/libraryBranch")
+@RequestMapping(value = "/LMSAdmin/libraryBranch",
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+
 public class LibraryBranchController {
 	
 	@Autowired
@@ -42,7 +46,7 @@ public class LibraryBranchController {
 		
 		if(checkId == true) {
 			branService.updateBranch(branchId, branchName, branchAddress);
-			return new ResponseEntity<String>("Library Branch record updated.", HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>("Library Branch record updated.", HttpStatus.OK);
 		}else {
 			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
 		}
