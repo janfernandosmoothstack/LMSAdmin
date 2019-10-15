@@ -283,5 +283,104 @@ public class LmsOrchestratorApplication {
 		            .body(e.getResponseBodyAsString());
 		}
 	}
+	
+	//Dispatch delete branch
+	@DeleteMapping("/LMSAdmin/libraryBranch/dispatch/branchId/{branchId}/newBranchId/{newBranId}")
+	public ResponseEntity<String> dispatchDeleteBranch(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
+			@PathVariable("branchId") Integer branchId, @PathVariable("newBranId") Integer newBranId) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Content-Type", contentType);
+		headers.add("Accept", accept);
+		
+		try {
+			return restTemp.exchange(adminUri + "/libraryBranch/dispatch/branchId/{branchId}/newBranchId/{newBranId}", HttpMethod.DELETE, 
+					new HttpEntity<Object>(headers), String.class, branchId, newBranId);
+		} catch (HttpStatusCodeException e){
+			return ResponseEntity.status(e.getRawStatusCode()).headers(e.getResponseHeaders())
+		            .body(e.getResponseBodyAsString());
+		}
+	}
+	
+	
+	
+	/*
+	 * Publisher Orchestrator
+	 */
+	
+	//Create pub
+	@PostMapping("/LMSAdmin/publisher/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}")
+	public ResponseEntity<String> insertPub(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
+			@PathVariable("publisherName") String pubName, @PathVariable("publisherAddress") String pubAddress, 
+			@PathVariable("publisherPhone") String pubPhone) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Content-Type", contentType);
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/publisher/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
+				HttpMethod.POST, new HttpEntity<Object>(headers), String.class, pubName, pubAddress, pubPhone);
+	}
+	
+	//Update pub
+	@PutMapping("/LMSAdmin/publisher/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}")
+	public ResponseEntity<String> updatePub(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
+			@PathVariable("publisherId") Integer pubId, @PathVariable("publisherName") String pubName, 
+			@PathVariable("publisherAddress") String pubAddress, @PathVariable("publisherPhone") String pubPhone) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Content-Type", contentType);
+		headers.add("Accept", accept);
+		
+		try {
+			return restTemp.exchange(adminUri + "/publisher/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", HttpMethod.PUT, 
+					new HttpEntity<Object>(headers), String.class, pubId, pubName, pubAddress, pubPhone);
+		} catch (HttpStatusCodeException e){
+			return ResponseEntity.status(e.getRawStatusCode()).headers(e.getResponseHeaders())
+	               .body(e.getResponseBodyAsString());
+		}
+	}
+	
+	//Delete pub
+	@DeleteMapping("/LMSAdmin/publisher/pubId/{publisherId}")
+	public ResponseEntity<String> deletePub(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
+			@PathVariable("publisherId") Integer pubId) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Content-Type", contentType);
+		headers.add("Accept", accept);
+		
+		try {
+			return restTemp.exchange(adminUri + "/publisher/pubId/{publisherId}", HttpMethod.DELETE, 
+					new HttpEntity<Object>(headers), String.class, pubId);
+		} catch (HttpStatusCodeException e){
+			return ResponseEntity.status(e.getRawStatusCode()).headers(e.getResponseHeaders())
+		            .body(e.getResponseBodyAsString());
+		}
+	}
+	
+	
+	/*
+	 * Override Orchestrator
+	 */
+	
+	//Override due date
+	@PutMapping("/LMSAdmin/overrideDueDate/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}")
+	public ResponseEntity<String> overDueDate(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
+			@PathVariable("cardNo") Integer cardNo, @PathVariable("branchId") Integer branchId, 
+			@PathVariable("bookId") Integer bookId, @PathVariable("days") Integer days) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Content-Type", contentType);
+		headers.add("Accept", accept);
+		
+		try {
+			return restTemp.exchange(adminUri + "/overrideDueDate/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}", HttpMethod.PUT, 
+					new HttpEntity<Object>(headers), String.class, cardNo, branchId, bookId, days);
+		} catch (HttpStatusCodeException e){
+			return ResponseEntity.status(e.getRawStatusCode()).headers(e.getResponseHeaders())
+	               .body(e.getResponseBodyAsString());
+		}
+	}
             
 }

@@ -269,7 +269,7 @@ public class AdminController {
 	}
 	
 	//Dispatch books then delete branch
-	@RequestMapping(value = "/dispatch/branchId/{branchId}/newBranchId/{newBranId}", 
+	@RequestMapping(value = "/libraryBranch/dispatch/branchId/{branchId}/newBranchId/{newBranId}", 
 			method = {RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.GET})
 	
 	public ResponseEntity<String> dispatchDeleteBranch(@PathVariable("branchId") int branchId, @PathVariable("newBranId") int newBranId) {
