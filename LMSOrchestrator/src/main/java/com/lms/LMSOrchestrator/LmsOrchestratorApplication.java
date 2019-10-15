@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -21,12 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import com.lms.LMSAdmin.pojo.Author;
+import com.lms.LMSAdmin.pojo.Book;
+import com.lms.LMSAdmin.pojo.Borrower;
+import com.lms.LMSAdmin.pojo.LibraryBranch;
+import com.lms.LMSAdmin.pojo.Publisher;
+
 
 @SpringBootApplication
 @RestController
-@RequestMapping(value = "/LMSOrchestrator", 
-	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(value = "/LMSOrchestrator")
 
 public class LmsOrchestratorApplication {
 	
@@ -50,7 +55,8 @@ public class LmsOrchestratorApplication {
 	 */
 	
 	//Create author
-	@PostMapping("/LMSAdmin/author/authorName/{authorName}")
+	@PostMapping(value = "/LMSAdmin/author/authorName/{authorName}", 
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertAuthor(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable String authorName) {
 		
@@ -63,7 +69,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Update author
-	@PutMapping("/LMSAdmin/author/authorId/{authorId}/authorName/{authorName}")
+	@PutMapping(value = "/LMSAdmin/author/authorId/{authorId}/authorName/{authorName}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> updateAuthor(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("authorId") Integer authorId, @PathVariable("authorName") String authorName) {
 		
@@ -81,7 +88,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Delete author
-	@DeleteMapping("/LMSAdmin/author/authorId/{authorId}")
+	@DeleteMapping(value = "/LMSAdmin/author/authorId/{authorId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteAuthor(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("authorId") Integer authorId) {
 		
@@ -98,21 +106,16 @@ public class LmsOrchestratorApplication {
 		}
 	}
 
-//	//View all authors
-//	@GetMapping("/LMSAdmin/author")
-//	public ResponseEntity<String> getAllAuthors(@RequestHeader("Accept") String accept) {
-//		
-//		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-//		headers.add("Accept", accept);
-//		
-//		try {
-//			return restTemp.exchange(adminUri + "/author", HttpMethod.GET, 
-//					new HttpEntity<Object>(headers), String.class);
-//		} catch (HttpStatusCodeException e){
-//			return ResponseEntity.status(e.getRawStatusCode()).headers(e.getResponseHeaders())
-//		            .body(e.getResponseBodyAsString());
-//		}
-//	}
+	//View all authors
+	@GetMapping(value = "/LMSAdmin/author", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Iterable<Author>> getAllAuthors(@RequestHeader("Accept") String accept) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/author", HttpMethod.GET, new HttpEntity<Object>(headers), 
+				new ParameterizedTypeReference<Iterable<Author>>(){});
+	}
 	
 	
 	/*
@@ -120,7 +123,8 @@ public class LmsOrchestratorApplication {
 	 */
 	
 	//Create book
-	@PostMapping("/LMSAdmin/book/title/{title}/authId/{authId}/pubId/{pubId}")
+	@PostMapping(value = "/LMSAdmin/book/title/{title}/authId/{authId}/pubId/{pubId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertBook(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("title") String title, @PathVariable("authId") Integer authId, @PathVariable("pubId") Integer pubId) {
 		
@@ -138,7 +142,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Update book
-	@PutMapping("/LMSAdmin/book/bookId/{bookId}/title/{title}/authId/{authId}/pubId/{pubId}")
+	@PutMapping(value = "/LMSAdmin/book/bookId/{bookId}/title/{title}/authId/{authId}/pubId/{pubId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> updateBook(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("bookId") Integer bookId, @PathVariable("title") String title, 
 			@PathVariable("authId") Integer authId, @PathVariable("pubId") Integer pubId) {
@@ -157,7 +162,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Delete book
-	@DeleteMapping("/LMSAdmin/book/bookId/{bookId}")
+	@DeleteMapping(value = "/LMSAdmin/book/bookId/{bookId}", 
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteBook(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("bookId") Integer bookId) {
 		
@@ -174,13 +180,25 @@ public class LmsOrchestratorApplication {
 		}
 	}
 	
+	//View all books
+	@GetMapping(value = "/LMSAdmin/book", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Iterable<Book>> getAllBooks(@RequestHeader("Accept") String accept) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/book", HttpMethod.GET, new HttpEntity<Object>(headers), 
+				new ParameterizedTypeReference<Iterable<Book>>(){});
+	}
+	
 	
 	/*
 	 * Borrower Orchestrator
 	 */
 	
 	//Create borrower
-	@PostMapping("/LMSAdmin/borrower/borrName/{name}/borrAddress/{address}/borrPhone/{phone}")
+	@PostMapping(value = "/LMSAdmin/borrower/borrName/{name}/borrAddress/{address}/borrPhone/{phone}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertBorr(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("name") String borrName, @PathVariable("address") String borrAddress, @PathVariable("phone") String borrPhone) {
 		
@@ -193,7 +211,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Update borrower
-	@PutMapping("/LMSAdmin/borrower/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}")
+	@PutMapping(value = "/LMSAdmin/borrower/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> updateBorr(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("cardNo") Integer cardNo, @PathVariable("name") String borrName, 
 			@PathVariable("address") String borrAddress, @PathVariable("phone") String borrPhone) {
@@ -212,7 +231,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Delete borrower
-	@DeleteMapping("/LMSAdmin/borrower/cardNo/{cardNo}")
+	@DeleteMapping(value = "/LMSAdmin/borrower/cardNo/{cardNo}", 
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteBorr(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("cardNo") Integer cardNo) {
 		
@@ -229,13 +249,25 @@ public class LmsOrchestratorApplication {
 		}
 	}
 	
+	//View all borrower
+	@GetMapping(value = "/LMSAdmin/borrower", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Iterable<Borrower>> getAllBorrs(@RequestHeader("Accept") String accept) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/borrower", HttpMethod.GET, new HttpEntity<Object>(headers), 
+				new ParameterizedTypeReference<Iterable<Borrower>>(){});
+	}
+	
 	
 	/*
 	 * Library Branch Orchestrator
 	 */
 	
 	//Create branch
-	@PostMapping("/LMSAdmin/libraryBranch/branchName/{name}/branchAddress/{address}")
+	@PostMapping(value = "/LMSAdmin/libraryBranch/branchName/{name}/branchAddress/{address}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertBranch(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("name") String branchName, @PathVariable("address") String branchAddress) {
 		
@@ -248,7 +280,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Update branch
-	@PutMapping("/LMSAdmin/libraryBranch/branchId/{branchId}/branchName/{name}/branchAddress/{address}")
+	@PutMapping(value = "/LMSAdmin/libraryBranch/branchId/{branchId}/branchName/{name}/branchAddress/{address}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> updateBranch(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("branchId") Integer branchId, @PathVariable("name") String branchName, 
 			@PathVariable("address") String branchAddress) {
@@ -267,7 +300,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Delete branch
-	@DeleteMapping("/LMSAdmin/libraryBranch/branchId/{branchId}")
+	@DeleteMapping(value = "/LMSAdmin/libraryBranch/branchId/{branchId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteBranch(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("branchId") Integer branchId) {
 		
@@ -285,7 +319,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Dispatch delete branch
-	@DeleteMapping("/LMSAdmin/libraryBranch/dispatch/branchId/{branchId}/newBranchId/{newBranId}")
+	@DeleteMapping(value = "/LMSAdmin/libraryBranch/dispatch/branchId/{branchId}/newBranchId/{newBranId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> dispatchDeleteBranch(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("branchId") Integer branchId, @PathVariable("newBranId") Integer newBranId) {
 		
@@ -302,6 +337,31 @@ public class LmsOrchestratorApplication {
 		}
 	}
 	
+	//View available branches
+	@GetMapping(value = "/LMSAdmin/libraryBranch/dispatch/branchId/{branchId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Iterable<LibraryBranch>> getAvailableBranch(@RequestHeader("Accept") String accept,
+			@PathVariable("branchId") Integer branchId) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/libraryBranch/dispatch/branchId/{branchId}", HttpMethod.GET, 
+				new HttpEntity<Object>(headers), new ParameterizedTypeReference<Iterable<LibraryBranch>>(){}, branchId);
+	}
+	
+	//View all branches
+	@GetMapping(value = "/LMSAdmin/libraryBranch", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Iterable<LibraryBranch>> getAvailableBranch(@RequestHeader("Accept") String accept) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/libraryBranch", HttpMethod.GET, 
+				new HttpEntity<Object>(headers), new ParameterizedTypeReference<Iterable<LibraryBranch>>(){});
+	}
+	
 	
 	
 	/*
@@ -309,7 +369,8 @@ public class LmsOrchestratorApplication {
 	 */
 	
 	//Create pub
-	@PostMapping("/LMSAdmin/publisher/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}")
+	@PostMapping(value = "/LMSAdmin/publisher/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertPub(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("publisherName") String pubName, @PathVariable("publisherAddress") String pubAddress, 
 			@PathVariable("publisherPhone") String pubPhone) {
@@ -323,7 +384,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Update pub
-	@PutMapping("/LMSAdmin/publisher/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}")
+	@PutMapping(value = "/LMSAdmin/publisher/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> updatePub(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("publisherId") Integer pubId, @PathVariable("publisherName") String pubName, 
 			@PathVariable("publisherAddress") String pubAddress, @PathVariable("publisherPhone") String pubPhone) {
@@ -342,7 +404,8 @@ public class LmsOrchestratorApplication {
 	}
 	
 	//Delete pub
-	@DeleteMapping("/LMSAdmin/publisher/pubId/{publisherId}")
+	@DeleteMapping(value = "/LMSAdmin/publisher/pubId/{publisherId}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deletePub(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("publisherId") Integer pubId) {
 		
@@ -359,13 +422,26 @@ public class LmsOrchestratorApplication {
 		}
 	}
 	
+	//View publishers
+	@GetMapping(value = "/LMSAdmin/publisher", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Iterable<Publisher>> getAllPubs(@RequestHeader("Accept") String accept) {
+		
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+		headers.add("Accept", accept);
+		
+		return restTemp.exchange(adminUri + "/publisher", HttpMethod.GET, 
+				new HttpEntity<Object>(headers), new ParameterizedTypeReference<Iterable<Publisher>>(){});
+	}
+	
+	
 	
 	/*
 	 * Override Orchestrator
 	 */
 	
 	//Override due date
-	@PutMapping("/LMSAdmin/overrideDueDate/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}")
+	@PutMapping(value = "/LMSAdmin/overrideDueDate/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}",
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> overDueDate(@RequestHeader("Accept") String accept, @RequestHeader("Content-Type") String contentType,
 			@PathVariable("cardNo") Integer cardNo, @PathVariable("branchId") Integer branchId, 
 			@PathVariable("bookId") Integer bookId, @PathVariable("days") Integer days) {

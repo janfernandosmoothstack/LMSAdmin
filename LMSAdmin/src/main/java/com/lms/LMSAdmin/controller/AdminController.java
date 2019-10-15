@@ -26,9 +26,7 @@ import com.lms.LMSAdmin.service.OverrideService;
 import com.lms.LMSAdmin.service.PublisherService;
 
 @RestController
-@RequestMapping(value = "/LMSAdmin*", 
-	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(value = "/LMSAdmin")
 
 public class AdminController {
 	
@@ -56,7 +54,8 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/author/authorName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/author/authorName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertAuthor(@PathVariable String authorName) {
 		
 		authorService.insertAuthor(authorName);
@@ -64,7 +63,8 @@ public class AdminController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/author/authorId/{authorId}/authorName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET})
+	@RequestMapping(value = "/author/authorId/{authorId}/authorName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> updateAuthor(@PathVariable("authorId") int authorId, @PathVariable("authorName") String authorName) {
 		
 		boolean checkId = authorService.ifExists(authorId);
@@ -78,7 +78,8 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/author/authorId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/author/authorId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteAuthor(@PathVariable int authorId) {
 		
 		boolean checkId = authorService.ifExists(authorId);
@@ -92,7 +93,8 @@ public class AdminController {
 	}
 	
 	//Get all records
-	@RequestMapping(value = "/author", method = RequestMethod.GET)
+	@RequestMapping(value = "/author", method = RequestMethod.GET, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Author> getAllAuthors() {
 		return authorService.getAllAuthors();
@@ -104,7 +106,8 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/book/title/{title}/authId/{authId}/pubId/{pubId}", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/book/title/{title}/authId/{authId}/pubId/{pubId}", method = {RequestMethod.POST, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> insertBook(@PathVariable("title") String title, @PathVariable("authId") int authId, 
 			@PathVariable("pubId") int pubId) {
 		
@@ -126,7 +129,8 @@ public class AdminController {
 	
 	//Update a record
 	@RequestMapping(value = "/book/bookId/{bookId}/title/{title}/authId/{authId}/pubId/{pubId}", 
-			method = {RequestMethod.PUT, RequestMethod.GET})
+			method = {RequestMethod.PUT, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 
 	public ResponseEntity<String> updateBook(@PathVariable("bookId") int bookId, @PathVariable("title") String title, 
 			@PathVariable("authId") int authId, @PathVariable("pubId") int pubId) {
@@ -155,7 +159,8 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/book/bookId/{bookId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/book/bookId/{bookId}", method = {RequestMethod.DELETE, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteBook(@PathVariable("bookId") int bookId) {
 		
 		boolean checkId = bookService.ifExists(bookId);
@@ -169,7 +174,8 @@ public class AdminController {
 	}
 	
 	//Get all records
-	@RequestMapping(value = "/book", method = RequestMethod.GET)
+	@RequestMapping(value = "/book", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Book> getAllBooks() {
 		return bookService.getAllBooks();
@@ -182,7 +188,8 @@ public class AdminController {
 	
 	//Create a record
 	@RequestMapping(value = "/borrower/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
-			method = {RequestMethod.POST, RequestMethod.GET})
+			method = {RequestMethod.POST, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> insertBorr(@PathVariable("name") String borrName, @PathVariable("address") String borrAddress, 
 			@PathVariable("phone") String borrPhone) {
@@ -193,7 +200,8 @@ public class AdminController {
 	
 	//Update a record
 	@RequestMapping(value = "/borrower/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
-			method = {RequestMethod.PUT, RequestMethod.GET})
+			method = {RequestMethod.PUT, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> updateBorr(@PathVariable("cardNo") int cardNo, @PathVariable("name") String borrName, 
 			@PathVariable("address") String borrAddress, @PathVariable("phone") String borrPhone) {
@@ -209,7 +217,8 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/borrower/cardNo/{cardNo}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/borrower/cardNo/{cardNo}", method = {RequestMethod.DELETE, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deleteBorr(@PathVariable("cardNo") int cardNo) {
 				
 		boolean checkId = borrService.ifExists(cardNo);
@@ -223,7 +232,8 @@ public class AdminController {
 	}
 	
 	//Get all records
-	@RequestMapping(value = "/borrower", method = RequestMethod.GET)
+	@RequestMapping(value = "/borrower", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Borrower> getAllBorrs() {
 		return borrService.getAllBorrs();
@@ -236,7 +246,8 @@ public class AdminController {
 	
 	//Create a record
 	@RequestMapping(value = "/libraryBranch/branchName/{name}/branchAddress/{address}", 
-			method = {RequestMethod.POST, RequestMethod.GET})
+			method = {RequestMethod.POST, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> insertBranch(@PathVariable("name") String branchName, @PathVariable("address") String branchAddress) {
 		
@@ -246,7 +257,8 @@ public class AdminController {
 	
 	//Update a record
 	@RequestMapping(value = "/libraryBranch/branchId/{branchId}/branchName/{name}/branchAddress/{address}", 
-			method = {RequestMethod.PUT, RequestMethod.GET})
+			method = {RequestMethod.PUT, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> updateBranch(@PathVariable("branchId") int branchId, @PathVariable("name") String branchName, 
 			@PathVariable("address") String branchAddress) {
@@ -261,16 +273,10 @@ public class AdminController {
 		}
 	}
 	
-	//Get all available branches to dispatch books to
-	@RequestMapping(value = "/libraryBranch/dispatchDelete/branchId/{branchId}/newBranchId", method = RequestMethod.GET)
-	@ResponseStatus(code = HttpStatus.OK)
-	public List<LibraryBranch> getAvailableBranch(@PathVariable("branchId") int branchId) {
-		return branService.getAvailableBranch(branchId);
-	}
-	
 	//Dispatch books then delete branch
 	@RequestMapping(value = "/libraryBranch/dispatch/branchId/{branchId}/newBranchId/{newBranId}", 
-			method = {RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.GET})
+			method = {RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> dispatchDeleteBranch(@PathVariable("branchId") int branchId, @PathVariable("newBranId") int newBranId) {
 		
@@ -287,7 +293,8 @@ public class AdminController {
 	
 	//Delete branch
 	@RequestMapping(value = "/libraryBranch/branchId/{branchId}", 
-			method = {RequestMethod.DELETE, RequestMethod.GET})
+			method = {RequestMethod.DELETE, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> deleteBranch(@PathVariable("branchId") int branchId) {
 		boolean checkId = branService.ifExists(branchId);
@@ -300,8 +307,18 @@ public class AdminController {
 		}
 	}
 	
+	//Get all available branches to dispatch books to
+	@RequestMapping(value = "/libraryBranch/dispatch/branchId/{branchId}", method = RequestMethod.GET,
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@ResponseStatus(code = HttpStatus.OK)
+	public List<LibraryBranch> getAvailableBranch(@PathVariable("branchId") int branchId) {
+		return branService.getAvailableBranch(branchId);
+	}
+	
 	//Get all records
-	@RequestMapping(value = "/libraryBranch", method = RequestMethod.GET)
+	@RequestMapping(value = "/libraryBranch", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<LibraryBranch> getAllBranches() {
 		return branService.getAllBranches();
@@ -314,7 +331,8 @@ public class AdminController {
 	
 	//Create a record
 	@RequestMapping(value = "/publisher/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
-			method = {RequestMethod.POST, RequestMethod.GET})
+			method = {RequestMethod.POST, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> insertPub(@PathVariable("publisherName") String pubName, 
 			@PathVariable("publisherAddress") String pubAddress, @PathVariable("publisherPhone") String pubPhone) {
@@ -325,7 +343,8 @@ public class AdminController {
 	
 	//Update a record
 	@RequestMapping(value = "/publisher/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
-			method = {RequestMethod.PUT, RequestMethod.GET})
+			method = {RequestMethod.PUT, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	
 	public ResponseEntity<String> updatePub(@PathVariable("publisherId") int pubId, @PathVariable("publisherName") String pubName, 
 			@PathVariable("publisherAddress") String pubAddress, @PathVariable("publisherPhone") String pubPhone) {
@@ -341,7 +360,8 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/publisher/pubId/{publisherId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/publisher/pubId/{publisherId}", method = {RequestMethod.DELETE, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<String> deletePub(@PathVariable("publisherId") int pubId) {
 		
 		boolean checkId = pubService.ifExists(pubId);
@@ -355,7 +375,8 @@ public class AdminController {
 	}
 	
 	//Get all records
-	@RequestMapping(value = "/publisher", method = RequestMethod.GET)
+	@RequestMapping(value = "/publisher", method = RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Publisher> getAllPubs() {
 		return pubService.getAllPubs();
@@ -368,7 +389,8 @@ public class AdminController {
 	
 	//Override due date
 	@RequestMapping(value = "/overrideDueDate/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}", 
-			method = {RequestMethod.PUT, RequestMethod.GET})
+			method = {RequestMethod.PUT, RequestMethod.GET},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 
 	public ResponseEntity<String> overDueDate(@PathVariable("cardNo") int cardNo, @PathVariable("branchId") int branchId, 
 			@PathVariable("bookId") int bookId, @PathVariable("days") int days) {
