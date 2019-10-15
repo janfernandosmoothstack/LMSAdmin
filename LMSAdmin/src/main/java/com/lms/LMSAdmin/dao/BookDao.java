@@ -48,13 +48,16 @@ public class BookDao extends Dao{
 				+ " SET title = ?, authId = ?, pubId = ? "
 				+ "WHERE bookId = ?";
 		
+		
 		try (Connection con = getCon(); 
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
 			ps.setString(1, title);
 			ps.setInt(2, authId);
-			ps.setInt(3, authId);
+			ps.setInt(3, pubId);
 			ps.setInt(4, bookId);
+			
+			System.out.println(ps.toString());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {

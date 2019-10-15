@@ -26,7 +26,7 @@ import com.lms.LMSAdmin.service.OverrideService;
 import com.lms.LMSAdmin.service.PublisherService;
 
 @RestController
-@RequestMapping(value = "/LMSAdmin", 
+@RequestMapping(value = "/LMSAdmin*", 
 	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
 	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 
@@ -56,7 +56,7 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/author/create/authorName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/author/authorName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET})
 	public ResponseEntity<String> insertAuthor(@PathVariable String authorName) {
 		
 		authorService.insertAuthor(authorName);
@@ -64,7 +64,7 @@ public class AdminController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/author/update/authorId/{authorId}/authorName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET})
+	@RequestMapping(value = "/author/authorId/{authorId}/authorName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET})
 	public ResponseEntity<String> updateAuthor(@PathVariable("authorId") int authorId, @PathVariable("authorName") String authorName) {
 		
 		boolean checkId = authorService.ifExists(authorId);
@@ -78,7 +78,7 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/author/delete/authorId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/author/authorId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET})
 	public ResponseEntity<String> deleteAuthor(@PathVariable int authorId) {
 		
 		boolean checkId = authorService.ifExists(authorId);
@@ -91,8 +91,8 @@ public class AdminController {
 		}
 	}
 	
-	//View all records
-	@RequestMapping(value = "/author/view", method = RequestMethod.GET)
+	//Get all records
+	@RequestMapping(value = "/author", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Author> getAllAuthors() {
 		return authorService.getAllAuthors();
@@ -104,7 +104,7 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/book/create/title/{title}/authId/{authId}/pubId/{pubId}", method = {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value = "/book/title/{title}/authId/{authId}/pubId/{pubId}", method = {RequestMethod.POST, RequestMethod.GET})
 	public ResponseEntity<String> insertBook(@PathVariable("title") String title, @PathVariable("authId") int authId, 
 			@PathVariable("pubId") int pubId) {
 		
@@ -125,7 +125,7 @@ public class AdminController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/book/update/bookId/{bookId}/title/{title}/authId/{authId}/pubId/{pubId}", 
+	@RequestMapping(value = "/book/bookId/{bookId}/title/{title}/authId/{authId}/pubId/{pubId}", 
 			method = {RequestMethod.PUT, RequestMethod.GET})
 
 	public ResponseEntity<String> updateBook(@PathVariable("bookId") int bookId, @PathVariable("title") String title, 
@@ -140,6 +140,7 @@ public class AdminController {
 				checkId = pubService.ifExists(pubId);
 				
 				if(checkId == true) {
+					System.out.println(bookId + " " + authId + " " + pubId);
 					bookService.updateBook(bookId, title, authId, pubId);
 					return new ResponseEntity<String>("Book record updated.", HttpStatus.OK);
 				}else {
@@ -154,22 +155,21 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/book/delete/bookId/{bookId}", method = {RequestMethod.DELETE, RequestMethod.GET})
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@RequestMapping(value = "/book/bookId/{bookId}", method = {RequestMethod.DELETE, RequestMethod.GET})
 	public ResponseEntity<String> deleteBook(@PathVariable("bookId") int bookId) {
 		
 		boolean checkId = bookService.ifExists(bookId);
 		
 		if(checkId == true) {
 			bookService.deleteBook(bookId);
-			return new ResponseEntity<String>("Book record deleted.", HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>("Book record deleted.", HttpStatus.NO_CONTENT);
 		}else {
 			return new ResponseEntity<String>("Invalid book ID.", HttpStatus.NOT_FOUND);
 		}	
 	}
 	
-	//View all records
-	@RequestMapping(value = "/book/view", method = RequestMethod.GET)
+	//Get all records
+	@RequestMapping(value = "/book", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Book> getAllBooks() {
 		return bookService.getAllBooks();
@@ -181,7 +181,7 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/borrower/create/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
+	@RequestMapping(value = "/borrower/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
 			method = {RequestMethod.POST, RequestMethod.GET})
 	
 	public ResponseEntity<String> insertBorr(@PathVariable("name") String borrName, @PathVariable("address") String borrAddress, 
@@ -192,7 +192,7 @@ public class AdminController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/borrower/update/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
+	@RequestMapping(value = "/borrower/cardNo/{cardNo}/borrName/{name}/borrAddress/{address}/borrPhone/{phone}", 
 			method = {RequestMethod.PUT, RequestMethod.GET})
 	
 	public ResponseEntity<String> updateBorr(@PathVariable("cardNo") int cardNo, @PathVariable("name") String borrName, 
@@ -209,7 +209,7 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/borrower/delete/cardNo/{cardNo}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/borrower/cardNo/{cardNo}", method = {RequestMethod.DELETE, RequestMethod.GET})
 	public ResponseEntity<String> deleteBorr(@PathVariable("cardNo") int cardNo) {
 				
 		boolean checkId = borrService.ifExists(cardNo);
@@ -222,8 +222,8 @@ public class AdminController {
 		}
 	}
 	
-	//View all records
-	@RequestMapping(value = "/borrower/view", method = RequestMethod.GET)
+	//Get all records
+	@RequestMapping(value = "/borrower", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Borrower> getAllBorrs() {
 		return borrService.getAllBorrs();
@@ -235,7 +235,7 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/libraryBranch/create/branchName/{name}/branchAddress/{address}", 
+	@RequestMapping(value = "/libraryBranch/branchName/{name}/branchAddress/{address}", 
 			method = {RequestMethod.POST, RequestMethod.GET})
 	
 	public ResponseEntity<String> insertBranch(@PathVariable("name") String branchName, @PathVariable("address") String branchAddress) {
@@ -245,7 +245,7 @@ public class AdminController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/libraryBranch/update/branchId/{branchId}/branchName/{name}/branchAddress/{address}", 
+	@RequestMapping(value = "/libraryBranch/branchId/{branchId}/branchName/{name}/branchAddress/{address}", 
 			method = {RequestMethod.PUT, RequestMethod.GET})
 	
 	public ResponseEntity<String> updateBranch(@PathVariable("branchId") int branchId, @PathVariable("name") String branchName, 
@@ -261,7 +261,7 @@ public class AdminController {
 		}
 	}
 	
-	//View all available branches to dispatch books to
+	//Get all available branches to dispatch books to
 	@RequestMapping(value = "/libraryBranch/dispatchDelete/branchId/{branchId}/newBranchId", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<LibraryBranch> getAvailableBranch(@PathVariable("branchId") int branchId) {
@@ -269,8 +269,8 @@ public class AdminController {
 	}
 	
 	//Dispatch books then delete branch
-	@RequestMapping(value = "/dispatchDelete/branchId/{branchId}//newBranchId/{newBranId}", 
-			method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/dispatch/branchId/{branchId}/newBranchId/{newBranId}", 
+			method = {RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.GET})
 	
 	public ResponseEntity<String> dispatchDeleteBranch(@PathVariable("branchId") int branchId, @PathVariable("newBranId") int newBranId) {
 		
@@ -286,8 +286,8 @@ public class AdminController {
 	}
 	
 	//Delete branch
-	@RequestMapping(value = "/libraryBranch/delete/libBranMenu/3/branchId/{branchId}", 
-			method = {RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/libraryBranch/branchId/{branchId}", 
+			method = {RequestMethod.DELETE, RequestMethod.GET})
 	
 	public ResponseEntity<String> deleteBranch(@PathVariable("branchId") int branchId) {
 		boolean checkId = branService.ifExists(branchId);
@@ -300,8 +300,8 @@ public class AdminController {
 		}
 	}
 	
-	//View all records
-	@RequestMapping(value = "/libraryBranch/view", method = RequestMethod.GET)
+	//Get all records
+	@RequestMapping(value = "/libraryBranch", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<LibraryBranch> getAllBranches() {
 		return branService.getAllBranches();
@@ -313,7 +313,7 @@ public class AdminController {
 	 */
 	
 	//Create a record
-	@RequestMapping(value = "/publisher/create/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
+	@RequestMapping(value = "/publisher/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
 			method = {RequestMethod.POST, RequestMethod.GET})
 	
 	public ResponseEntity<String> insertPub(@PathVariable("publisherName") String pubName, 
@@ -324,7 +324,7 @@ public class AdminController {
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/publisher/update/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
+	@RequestMapping(value = "/publisher/pubId/{publisherId}/pubName/{publisherName}/pubAddress/{publisherAddress}/pubPhone/{publisherPhone}", 
 			method = {RequestMethod.PUT, RequestMethod.GET})
 	
 	public ResponseEntity<String> updatePub(@PathVariable("publisherId") int pubId, @PathVariable("publisherName") String pubName, 
@@ -341,7 +341,7 @@ public class AdminController {
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/publisher/delete/pubId/{publisherId}", method = {RequestMethod.DELETE, RequestMethod.GET})
+	@RequestMapping(value = "/publisher/pubId/{publisherId}", method = {RequestMethod.DELETE, RequestMethod.GET})
 	public ResponseEntity<String> deletePub(@PathVariable("publisherId") int pubId) {
 		
 		boolean checkId = pubService.ifExists(pubId);
@@ -354,8 +354,8 @@ public class AdminController {
 		}
 	}
 	
-	//View all records
-	@RequestMapping(value = "/publisher/view", method = RequestMethod.GET)
+	//Get all records
+	@RequestMapping(value = "/publisher", method = RequestMethod.GET)
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Publisher> getAllPubs() {
 		return pubService.getAllPubs();
