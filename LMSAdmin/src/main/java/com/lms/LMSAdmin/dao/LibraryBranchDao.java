@@ -164,24 +164,4 @@ public class LibraryBranchDao extends Dao {
 		
 		return libBranList;
 	}
-	
-//	//test
-//	public Author getBookCopies(int authorId) throws SQLException {
-//		String sql = "SELECT * FROM tbl_author WHERE authorId = ?";
-//		PreparedStatement ps = getCon().prepareStatement(sql);
-//		ps.setInt(1, authorId);
-//		ResultSet rs = ps.executeQuery();
-//		Author author = new Author();
-//		
-//		while(rs.next()) {
-//			author.setAuthorId(rs.getInt("authorId"));
-//			author.setAuthorName(rs.getString("authorName"));
-//		}
-//		
-//		ps.close();
-//		getCon().close();
-//		
-//		return author;
-//	}
-	
 }
