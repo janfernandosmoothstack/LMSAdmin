@@ -15,16 +15,16 @@ import com.lms.LMSAdmin.pojo.Publisher;
 public class PublisherDao extends Dao {
 	
 	//Insert Pub record
-	public void insertPub(String pubName, String pubAddress, String pubPhone) {
+	public void insertPub(Publisher publisher) {
 		String sql = "INSERT INTO tbl_publisher (publisherName, publisherAddress, publisherPhone) "
 				+ "VALUES (?, ?, ?)";
 		
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setString(1, pubName);
-			ps.setString(2, pubAddress);
-			ps.setString(3, pubPhone);
+			ps.setString(1, publisher.getPublisherName());
+			ps.setString(2, publisher.getPublisherAddress());
+			ps.setString(3, publisher.getPublisherPhone());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -33,7 +33,7 @@ public class PublisherDao extends Dao {
 	}
 	
 	//Update pub record
-	public void updatePub(int pubId, String pubName, String pubAddress, String pubPhone) {
+	public void updatePub(Publisher publisher) {
 		String sql = "UPDATE tbl_publisher"
 				+ " SET publisherName = ?, publisherAddress = ?, publisherPhone = ? "
 				+ "WHERE publisherId = ?";
@@ -41,10 +41,10 @@ public class PublisherDao extends Dao {
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 
-			ps.setString(1, pubName);
-			ps.setString(2, pubAddress);
-			ps.setString(3, pubPhone);
-			ps.setInt(4, pubId);
+			ps.setString(1, publisher.getPublisherName());
+			ps.setString(2, publisher.getPublisherAddress());
+			ps.setString(3, publisher.getPublisherPhone());
+			ps.setInt(4, publisher.getPublisherId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -53,14 +53,14 @@ public class PublisherDao extends Dao {
 	}
 	
 	//Delete pub record
-	public void deletePub(int pubId) {
+	public void deletePub(Publisher publisher) {
 		String sql = "DELETE FROM tbl_publisher"
 				+ " WHERE publisherId = ?";
 		
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setInt(1, pubId);
+			ps.setInt(1, publisher.getPublisherId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {

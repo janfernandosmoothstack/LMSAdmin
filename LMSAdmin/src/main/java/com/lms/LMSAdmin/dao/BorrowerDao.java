@@ -15,16 +15,16 @@ import com.lms.LMSAdmin.pojo.Borrower;
 public class BorrowerDao extends Dao{
 	
 	//Insert Borrower record
-	public void insertBorr(String borrName, String borrAddress, String borrPhone) {
+	public void insertBorr(Borrower borrower) {
 		String sql = "INSERT INTO tbl_borrower (name, address, phone) "
 				+ "VALUES (?, ?, ?)";
 		
 		try (Connection con = getCon(); 
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setString(1, borrName);
-			ps.setString(2, borrAddress);
-			ps.setString(3, borrPhone);
+			ps.setString(1, borrower.getName());
+			ps.setString(2, borrower.getAddress());
+			ps.setString(3, borrower.getAddress());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -33,7 +33,7 @@ public class BorrowerDao extends Dao{
 	}
 	
 	//Update record
-	public void updateBorr(int cardNo, String name, String address, String phone) {
+	public void updateBorr(Borrower borrower) {
 		String sql = "UPDATE tbl_borrower"
 				+ " SET name = ?, address = ?, phone = ? "
 				+ "WHERE cardNo = ?";
@@ -41,10 +41,10 @@ public class BorrowerDao extends Dao{
 		try (Connection con = getCon(); 
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setString(1, name);
-			ps.setString(2, address);
-			ps.setString(3, phone);
-			ps.setInt(4, cardNo);
+			ps.setString(1, borrower.getName());
+			ps.setString(2, borrower.getAddress());
+			ps.setString(3, borrower.getPhone());
+			ps.setInt(4, borrower.getCardNo());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -53,14 +53,14 @@ public class BorrowerDao extends Dao{
 	}
 	
 	//Delete record
-	public void deleteBorr(int cardNo) {
+	public void deleteBorr(Borrower borrower) {
 		String sql = "DELETE FROM tbl_borrower"
 				+ " WHERE cardNo = ?";
 		
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setInt(1, cardNo);
+			ps.setInt(1, borrower.getCardNo());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {

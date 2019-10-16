@@ -25,16 +25,16 @@ public class BookDao extends Dao{
 	PublisherDao pubDao;
 	
 	//Insert record
-	public void insertBook(String title, int authId, int pubId) {
+	public void insertBook(Book book) {
 		String sql = "INSERT INTO tbl_book (title, authId, pubId) "
 				+ "VALUES (?, ?, ?)";
 		
 		try (Connection con = getCon(); 
 				PreparedStatement ps = con.prepareStatement(sql)){
 
-			ps.setString(1, title);
-			ps.setInt(2, authId);
-			ps.setInt(3, pubId);
+			ps.setString(1, book.getTitle());
+			ps.setInt(2, book.getAuthor().getAuthorId());
+			ps.setInt(3, book.getPublisher().getPublisherId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -43,7 +43,7 @@ public class BookDao extends Dao{
 	}
 	
 	//Update record
-	public void updateBook(int bookId, String title, int authId, int pubId) {
+	public void updateBook(Book book) {
 		String sql = "UPDATE tbl_book"
 				+ " SET title = ?, authId = ?, pubId = ? "
 				+ "WHERE bookId = ?";
@@ -52,10 +52,10 @@ public class BookDao extends Dao{
 		try (Connection con = getCon(); 
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setString(1, title);
-			ps.setInt(2, authId);
-			ps.setInt(3, pubId);
-			ps.setInt(4, bookId);
+			ps.setString(1, book.getTitle());
+			ps.setInt(2, book.getAuthor().getAuthorId());
+			ps.setInt(3, book.getPublisher().getPublisherId());
+			ps.setInt(4, book.getBookId());
 			
 			System.out.println(ps.toString());
 			ps.executeUpdate();
@@ -66,14 +66,14 @@ public class BookDao extends Dao{
 	}
 	
 	//Delete record
-	public void deleteBook(int bookId) {
+	public void deleteBook(Book book) {
 		String sql = "DELETE FROM tbl_book"
 				+ " WHERE bookId = ?";
 		
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setInt(1, bookId);
+			ps.setInt(1, book.getBookId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {

@@ -15,18 +15,18 @@ public class BookService {
 	BookDao bookDao;
 	
 	//Insert record
-	public void insertBook(String title, int authId, int pubId) {
-		bookDao.insertBook(title, authId, pubId);
+	public void insertBook(Book book) {
+		bookDao.insertBook(book);
 	}
 	
 	//Update record
-	public void updateBook(int bookId, String title, int authId, int pubId) {
-		bookDao.updateBook(bookId, title, authId, pubId);
+	public void updateBook(Book book) {
+		bookDao.updateBook(book);
 	}
 	
 	//Delete record
-	public void deleteBook(int bookId) {
-		bookDao.deleteBook(bookId);
+	public void deleteBook(Book book) {
+		bookDao.deleteBook(book);
 	}
 	
 	//Get all records

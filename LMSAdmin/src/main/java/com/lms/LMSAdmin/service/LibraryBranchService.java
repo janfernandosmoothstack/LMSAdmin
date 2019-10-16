@@ -15,33 +15,23 @@ public class LibraryBranchService {
 	LibraryBranchDao branDao;
 	
 	//Insert record
-	public void insertBranch(String branchName, String branchAddress) {
-		branDao.insertBranch(branchName, branchAddress);
+	public void insertBranch(LibraryBranch branch) {
+		branDao.insertBranch(branch);
 	}
 	
 	//Update record
-	public void updateBranch(int branchId, String branchName, String branchAddress) {
-		branDao.updateBranch(branchId, branchName, branchAddress);
-	}
-	
-	//Dispatch books to new branch
-	public void dispatchBooks(int branchId, int newBranId) {
-		branDao.dispatchBooks(branchId, newBranId);
+	public void updateBranch(LibraryBranch branch) {
+		branDao.updateBranch(branch);
 	}
 	
 	//Delete record
-	public void deleteBranch(int branchId) {
-		branDao.deleteBranch(branchId);
+	public void deleteBranch(LibraryBranch branch) {
+		branDao.deleteBranch(branch);
 	}
 	
 	//Get all records
 	public List<LibraryBranch> getAllBranches() {
 		return branDao.getAllBranches();
-	}
-	
-	//Get all available branches to dispatch books to
-	public List<LibraryBranch> getAvailableBranch(int branchId){
-		return branDao.getAvailableBranch(branchId);
 	}
 	
 	//Validate Id

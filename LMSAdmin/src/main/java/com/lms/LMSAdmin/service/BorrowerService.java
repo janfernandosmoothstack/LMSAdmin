@@ -15,18 +15,18 @@ public class BorrowerService {
 	BorrowerDao borrDao;
 	
 	//Insert record
-	public void insertBorr(String borrName, String borrAddress, String borrPhone) {
-		borrDao.insertBorr(borrName, borrAddress, borrPhone);
+	public void insertBorr(Borrower borrower) {
+		borrDao.insertBorr(borrower);
 	}
 	
 	//Update record
-	public void updateBorr(int cardNo, String borrName, String borrAddress, String borrPhone) {
-		borrDao.updateBorr(cardNo, borrName, borrAddress, borrPhone);
+	public void updateBorr(Borrower borrower) {
+		borrDao.updateBorr(borrower);
 	}
 	
 	//Delete record
-	public void deleteBorr(int cardNo) {
-		borrDao.deleteBorr(cardNo);
+	public void deleteBorr(Borrower borrower) {
+		borrDao.deleteBorr(borrower);
 	}
 	
 	//Get all records

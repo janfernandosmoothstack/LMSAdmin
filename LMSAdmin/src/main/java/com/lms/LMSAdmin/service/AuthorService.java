@@ -15,18 +15,18 @@ public class AuthorService {
 	AuthorDao authorDao;
 	
 	//Insert author record
-	public void insertAuthor(String authorName) {
-		authorDao.insertAuthor(authorName);
+	public void insertAuthor(Author author) {
+		authorDao.insertAuthor(author);
 	}
 	
 	//Update author record
-	public void updateAuthor(int authorId, String authorName) {
-		authorDao.updateAuthor(authorId, authorName);
+	public void updateAuthor(Author author) {
+		authorDao.updateAuthor(author);
 	}
 	
 	//Delete author record
-	public void deleteAuthor(int authorId) {
-		authorDao.deleteAuthor(authorId);
+	public void deleteAuthor(Author author) {
+		authorDao.deleteAuthor(author);
 	}
 	
 	//Get all author records

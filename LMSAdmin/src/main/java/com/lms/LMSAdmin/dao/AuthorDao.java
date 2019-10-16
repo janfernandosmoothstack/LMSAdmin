@@ -15,14 +15,14 @@ import com.lms.LMSAdmin.pojo.Author;
 public class AuthorDao extends Dao{
 	
 	//Insert author record
-	public void insertAuthor(String authorName) {
+	public void insertAuthor(Author author) {
 		String sql = "INSERT INTO tbl_author (authorName) "
 				+ "VALUE (?)";
 		
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setString(1, authorName);
+			ps.setString(1, author.getAuthorName());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -31,7 +31,7 @@ public class AuthorDao extends Dao{
 	}
 	
 	//Update author record
-	public void updateAuthor(int authorId, String authorName) {
+	public void updateAuthor(Author author) {
 		String sql = "UPDATE tbl_author"
 				+ " SET authorName = ? "
 				+ "WHERE authorId = ?";
@@ -39,8 +39,8 @@ public class AuthorDao extends Dao{
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setString(1, authorName);
-			ps.setInt(2, authorId);
+			ps.setString(1, author.getAuthorName());
+			ps.setInt(2, author.getAuthorId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -49,14 +49,14 @@ public class AuthorDao extends Dao{
 	}
 	
 	//Delete author record
-	public void deleteAuthor(int authorId) {
+	public void deleteAuthor(Author author) {
 		String sql = "DELETE FROM tbl_author"
 				+ " WHERE authorId = ?";
 		
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
-			ps.setInt(1, authorId);
+			ps.setInt(1, author.getAuthorId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {

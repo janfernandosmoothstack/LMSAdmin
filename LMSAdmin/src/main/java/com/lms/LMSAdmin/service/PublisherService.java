@@ -15,18 +15,18 @@ public class PublisherService {
 	PublisherDao pubDao;
 	
 	//Insert publisher record
-	public void insertPub(String pubName, String pubAddress, String pubPhone) {
-		pubDao.insertPub(pubName, pubAddress, pubPhone);
+	public void insertPub(Publisher publisher) {
+		pubDao.insertPub(publisher);
 	}
 	
 	//Update publisher record
-	public void updatePub(int pubId, String pubName, String pubAddress, String pubPhone) {
-		pubDao.updatePub(pubId, pubName, pubAddress, pubPhone);
+	public void updatePub(Publisher publisher) {
+		pubDao.updatePub(publisher);
 	}
 	
 	//Delete publisher record
-	public void deletePub(int pubId) {
-		pubDao.deletePub(pubId);
+	public void deletePub(Publisher publisher) {
+		pubDao.deletePub(publisher);
 	}
 	
 	//Get all publisher records

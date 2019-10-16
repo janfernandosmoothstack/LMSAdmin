@@ -14,12 +14,13 @@ import com.lms.LMSAdmin.pojo.Book;
 import com.lms.LMSAdmin.pojo.BookLoans;
 import com.lms.LMSAdmin.pojo.Borrower;
 import com.lms.LMSAdmin.pojo.LibraryBranch;
+import com.lms.LMSAdmin.pojo.Override;
 
 @Component
 public class OverrideDao extends Dao {
 	
 	//Override the due date
-	public void overrideDueDate(int cardNo, int bookId, int branchId, Date currDueDate, int days) {
+	public void overrideDueDate(Override override, Date currDueDate) {
 		String sql = "UPDATE tbl_book_loans "
 				+ " SET dueDate = DATE_ADD(?, INTERVAL ? DAY) "
 				+ "WHERE cardNo = ? "
@@ -30,10 +31,10 @@ public class OverrideDao extends Dao {
 				PreparedStatement ps = con.prepareStatement(sql)){
 			
 			ps.setDate(1, currDueDate);
-			ps.setInt(2, days);
-			ps.setInt(3, cardNo);
-			ps.setInt(4, bookId);
-			ps.setInt(5, branchId);
+			ps.setInt(2, override.getDays());
+			ps.setInt(3, override.getBorrower().getCardNo());
+			ps.setInt(4, override.getBook().getBookId());
+			ps.setInt(5, override.getBranch().getBranchId());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -42,7 +43,7 @@ public class OverrideDao extends Dao {
 	}
 	
 	//Get the current due date
-	public Date getDueDate(int cardNo, int bookId, int branchId) {
+	public Date getDueDate(Override override) {
 		Date dueDate = null;
 		
 		String sql = "SELECT dueDate FROM tbl_book_loans "
@@ -53,9 +54,9 @@ public class OverrideDao extends Dao {
 		try (Connection con = getCon();
 				PreparedStatement ps = con.prepareStatement(sql)){
 		
-			ps.setInt(1, bookId);
-			ps.setInt(2, branchId);
-			ps.setInt(3, cardNo);
+			ps.setInt(1, override.getBook().getBookId());
+			ps.setInt(2, override.getBranch().getBranchId());
+			ps.setInt(3, override.getBorrower().getCardNo());
 			
 	        ResultSet rs = ps.executeQuery();
 	        

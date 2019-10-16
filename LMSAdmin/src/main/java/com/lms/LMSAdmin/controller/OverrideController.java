@@ -2,41 +2,43 @@ package com.lms.LMSAdmin.controller;
 
 import java.sql.Date;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lms.LMSAdmin.service.OverrideService;
+import com.lms.LMSAdmin.pojo.Override;
 
 @RestController
+@RequestMapping("/LMSAdmin/overrideDueDate")
+@Produces({"application/xml", "application/json"})
+@Consumes({"application/xml", "application/json"})
 public class OverrideController {
 
 	@Autowired
 	OverrideService overService;
 	
 	//Override due date
-	@RequestMapping(value = "/overrideDueDate/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}", 
-			method = {RequestMethod.PUT, RequestMethod.GET},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-
-	public ResponseEntity<String> overDueDate(@PathVariable("cardNo") int cardNo, @PathVariable("branchId") int branchId, 
-			@PathVariable("bookId") int bookId, @PathVariable("days") int days) {
+	@PutMapping("/cardNo/{cardNo}/branchId/{branchId}/bookId/{bookId}/extraDays/{days}")
+	public ResponseEntity<?> overDueDate(@RequestBody Override override) {
 		
-		boolean checkIds = overService.ifExists(cardNo, bookId, branchId);
+		boolean checkIds = overService.ifExists(override.getBorrower().getCardNo(), override.getBranch().getBranchId(), override.getBook().getBookId());
 		
 		if(checkIds == true) {
 			//Get the current due date
-			Date currDueDate = overService.getDueDate(cardNo, bookId, branchId);
-			overService.overDueDate(cardNo, bookId, branchId, currDueDate, days);
+			Date currDueDate = overService.getDueDate(override);
+			overService.overDueDate(override, currDueDate);
 			
-			return new ResponseEntity<String>("Override successful.", HttpStatus.CREATED);
+			return new ResponseEntity<Override>(override, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<String>("Invalid ID.", HttpStatus.OK);
+			return new ResponseEntity<Override>(override, HttpStatus.NOT_FOUND);
 		}
 	}
 }

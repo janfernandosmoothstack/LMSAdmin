@@ -2,13 +2,18 @@ package com.lms.LMSAdmin.controller;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,54 +21,52 @@ import com.lms.LMSAdmin.pojo.Author;
 import com.lms.LMSAdmin.service.AuthorService;
 
 @RestController
-@RequestMapping(value = "/LMSAdmin/authors")
+@RequestMapping("/LMSAdmin/authors")
+@Produces({"application/xml", "application/json"})
+@Consumes({"application/xml", "application/json"})
 public class AuthorController {
 
 	@Autowired
 	AuthorService authorService;
 	
 	//Create a record
-	@RequestMapping(value = "/author/authorName/{authorName}", method = {RequestMethod.POST, RequestMethod.GET},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<String> insertAuthor(@PathVariable String authorName) {
+	@PostMapping("/authorName/{authorName}")
+	public ResponseEntity<?> insertAuthor(@RequestBody Author author) {
 		
-		authorService.insertAuthor(authorName);
-		return new ResponseEntity<String>("Author record created.", HttpStatus.CREATED);
+		authorService.insertAuthor(author);
+		return new ResponseEntity<Author>(author, HttpStatus.CREATED);
 	}
 	
 	//Update a record
-	@RequestMapping(value = "/author/authorId/{authorId}/authorName/{authorName}", method = {RequestMethod.PUT, RequestMethod.GET},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<String> updateAuthor(@PathVariable("authorId") int authorId, @PathVariable("authorName") String authorName) {
+	@PutMapping("/authorId/{authorId}/authorName/{authorName}")
+	public ResponseEntity<?> updateAuthor(@RequestBody Author author) {
 		
-		boolean checkId = authorService.ifExists(authorId);
+		boolean checkId = authorService.ifExists(author.getAuthorId());
 		
 		if(checkId == true) {
-			authorService.updateAuthor(authorId, authorName);
-			return new ResponseEntity<String>("Author record updated.", HttpStatus.OK);
+			authorService.updateAuthor(author);
+			return new ResponseEntity<Author>(author, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Author>(author, HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	//Delete a record
-	@RequestMapping(value = "/author/authorId/{authorId}", method = {RequestMethod.DELETE, RequestMethod.GET},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	public ResponseEntity<String> deleteAuthor(@PathVariable int authorId) {
+	@DeleteMapping("/authorId/{authorId}")
+	public ResponseEntity<?> deleteAuthor(@RequestBody Author author) {
 		
-		boolean checkId = authorService.ifExists(authorId);
+		boolean checkId = authorService.ifExists(author.getAuthorId());
 		
 		if(checkId == true) {
-			authorService.deleteAuthor(authorId);
-			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+			authorService.deleteAuthor(author);
+			return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
 		}else {
-			return new ResponseEntity<String>("Invalid ID.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Author>(author, HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	//Get all records
-	@RequestMapping(value = "/author", method = RequestMethod.GET, 
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@GetMapping("")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Author> getAllAuthors() {
 		return authorService.getAllAuthors();

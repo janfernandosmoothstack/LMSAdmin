@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.lms.LMSAdmin.dao.OverrideDao;
 import com.lms.LMSAdmin.pojo.BookLoans;
+import com.lms.LMSAdmin.pojo.Override;
 
 @Component
 public class OverrideService {
@@ -16,13 +17,13 @@ public class OverrideService {
 	OverrideDao overDao;
 	
 	//Get current due date
-	public Date getDueDate(int cardNo, int bookId, int branchId) {
-		return overDao.getDueDate(cardNo, bookId, branchId);		
+	public Date getDueDate(Override override) {
+		return overDao.getDueDate(override);		
 	}
 	
 	//Override due date
-	public void overDueDate(int cardNo, int bookId, int branchId, Date currDueDate, int days) {
-		overDao.overrideDueDate(cardNo, bookId, branchId, currDueDate, days);
+	public void overDueDate(Override override, Date currDueDate) {
+		overDao.overrideDueDate(override, currDueDate);
 	}
 	
 	//Validate Id's
