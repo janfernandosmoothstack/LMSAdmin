@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lms</groupId>
-	<artifactId>LMSAdmin</artifactId>
+	<artifactId>LMSOrchestrator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>LMSAdmin</name>
+	<name>LMSOrchestrator</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
