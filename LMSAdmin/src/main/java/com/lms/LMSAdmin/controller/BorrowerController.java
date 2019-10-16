@@ -34,7 +34,7 @@ public class BorrowerController {
 	public ResponseEntity<?> insertBorr(@RequestBody Borrower borrower) {
 		
 		borrService.insertBorr(borrower);
-		return new ResponseEntity<Borrower>(borrower, HttpStatus.CREATED);
+		return new ResponseEntity<Borrower>(HttpStatus.CREATED);
 	}
 	
 	//Update a record
@@ -45,9 +45,9 @@ public class BorrowerController {
 		
 		if(checkId == true) {
 			borrService.updateBorr(borrower);
-			return new ResponseEntity<Borrower>(borrower, HttpStatus.OK);
+			return new ResponseEntity<Borrower>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity<Borrower>(borrower, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Borrower>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class BorrowerController {
 			borrService.deleteBorr(borrower);
 			return new ResponseEntity<Borrower>(HttpStatus.NO_CONTENT);
 		}else {
-			return new ResponseEntity<Borrower>(borrower, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Borrower>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

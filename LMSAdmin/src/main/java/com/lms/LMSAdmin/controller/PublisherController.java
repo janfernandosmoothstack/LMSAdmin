@@ -34,7 +34,7 @@ public class PublisherController {
 	public ResponseEntity<?> insertPub(@RequestBody Publisher publisher) {
 		
 		pubService.insertPub(publisher);
-		return new ResponseEntity<Publisher>(publisher, HttpStatus.CREATED);
+		return new ResponseEntity<Publisher>(HttpStatus.CREATED);
 	}
 	
 	//Update a record
@@ -45,7 +45,7 @@ public class PublisherController {
 		
 		if(checkId == true) {
 			pubService.updatePub(publisher);
-			return new ResponseEntity<Publisher>(publisher, HttpStatus.OK);
+			return new ResponseEntity<Publisher>(HttpStatus.OK);
 		}else {
 			return new ResponseEntity<Publisher>(HttpStatus.NOT_FOUND);
 		}

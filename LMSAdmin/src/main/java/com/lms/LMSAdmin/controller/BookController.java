@@ -48,12 +48,12 @@ public class BookController {
 			
 			if(checkId == true) {
 				bookService.insertBook(book);
-				return new ResponseEntity<Book>(book, HttpStatus.CREATED);
+				return new ResponseEntity<Book>(HttpStatus.CREATED);
 			} else {
-				return new ResponseEntity<Book>(book, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
 			}
 		} else {
-			return new ResponseEntity<Book>(book, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -71,15 +71,15 @@ public class BookController {
 				
 				if(checkId == true) {
 					bookService.updateBook(book);
-					return new ResponseEntity<Book>(book, HttpStatus.OK);
+					return new ResponseEntity<Book>(HttpStatus.OK);
 				}else {
-					return new ResponseEntity<Book>(book, HttpStatus.NOT_FOUND);
+					return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
 				}
 			} else {
-				return new ResponseEntity<Book>(book, HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
 			}
 		} else {
-			return new ResponseEntity<Book>(book, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class BookController {
 			bookService.deleteBook(book);
 			return new ResponseEntity<Book>(HttpStatus.NO_CONTENT);
 		}else {
-			return new ResponseEntity<Book>(book, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Book>(HttpStatus.NOT_FOUND);
 		}	
 	}
 	

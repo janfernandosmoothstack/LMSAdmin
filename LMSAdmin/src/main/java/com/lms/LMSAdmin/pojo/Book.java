@@ -7,7 +7,7 @@ public class Book {
 	private Publisher publisher;
 	
 	public Book() {}
-	
+
 	public Book(Integer bookId, String title, Author author, Publisher publisher) {
 		super();
 		this.bookId = bookId;
@@ -47,4 +47,5 @@ public class Book {
 	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 	}
+
 }

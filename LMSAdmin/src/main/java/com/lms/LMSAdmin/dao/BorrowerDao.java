@@ -24,7 +24,7 @@ public class BorrowerDao extends Dao{
 			
 			ps.setString(1, borrower.getName());
 			ps.setString(2, borrower.getAddress());
-			ps.setString(3, borrower.getAddress());
+			ps.setString(3, borrower.getPhone());
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {

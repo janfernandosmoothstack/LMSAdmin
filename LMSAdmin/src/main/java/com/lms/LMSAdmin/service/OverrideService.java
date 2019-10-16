@@ -26,8 +26,12 @@ public class OverrideService {
 		overDao.overrideDueDate(override, currDueDate);
 	}
 	
+	public List<BookLoans> getBookLoans() {
+		return overDao.getBookLoans();
+	}
+	
 	//Validate Id's
-	public boolean ifExists(int cardNo, int bookId, int branchId) {
+	public boolean ifExists(int cardNo, int branchId, int bookId) {
 		List<BookLoans> list = overDao.getBookLoans();
 		boolean exists = false;
 		

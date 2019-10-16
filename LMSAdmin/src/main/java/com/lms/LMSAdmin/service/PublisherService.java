@@ -34,6 +34,11 @@ public class PublisherService {
 		return pubDao.getAllPubs();
 	}
 	
+	//Get one publisher
+	public Publisher getPublisherById(int publisherId) {
+		return pubDao.getPublisherById(publisherId);
+	}
+	
 	//Validate publisher Id
 	public boolean ifExists(int pubId) {
 		List<Publisher> list = pubDao.getAllPubs();

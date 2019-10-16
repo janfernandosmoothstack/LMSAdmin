@@ -97,4 +97,30 @@ public class PublisherDao extends Dao {
 		
 		return pubList;
 	}
+	
+	public Publisher getPublisherById(int publisherId) {
+		Publisher pub = new Publisher();;
+		
+		String sql = "SELECT publisherName, publisherAddress, publisherPhone "
+				+ "FROM tbl_publisher WHERE publisherId = ?";
+		
+		try (Connection con = getCon();
+				PreparedStatement ps = con.prepareStatement(sql)){
+			
+			ps.setInt(1, publisherId);
+            ResultSet rs = ps.executeQuery();
+            
+            pub.setPublisherId(publisherId);
+        	
+            while (rs.next()) {
+            	pub.setPublisherName(rs.getString("publisherName"));
+            	pub.setPublisherAddress(rs.getString("publisherAddress"));
+            	pub.setPublisherPhone(rs.getString("publisherPhone"));
+            }
+        } catch (SQLException e) {
+        	System.out.println(e);
+        }
+		
+		return pub;
+	}
 }

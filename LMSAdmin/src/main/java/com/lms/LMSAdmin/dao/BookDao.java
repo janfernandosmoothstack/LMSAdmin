@@ -56,8 +56,7 @@ public class BookDao extends Dao{
 			ps.setInt(2, book.getAuthor().getAuthorId());
 			ps.setInt(3, book.getPublisher().getPublisherId());
 			ps.setInt(4, book.getBookId());
-			
-			System.out.println(ps.toString());
+		
 			ps.executeUpdate();
 		 	
 		} catch (SQLException e) {
@@ -110,7 +109,7 @@ public class BookDao extends Dao{
             	List<Author> aList = authList.stream()
             			.filter(data -> data.getAuthorId().equals(authId))
             			.collect(Collectors.toList());
-            	
+           	
             	author = aList.get(0);	
             	book.setAuthor(author);
             	

@@ -30,24 +30,24 @@ public class LibraryBranchController {
 	LibraryBranchService branService;
 	
 	//Create a record
-	@PostMapping("/branchName/{name}/branchAddress/{address}")
+	@PostMapping("/branchName/{branchName}/branchAddress/{branchAddress}")
 	public ResponseEntity<LibraryBranch> insertBranch(@RequestBody LibraryBranch branch) {
 		
 		branService.insertBranch(branch);
-		return new ResponseEntity<LibraryBranch>(branch, HttpStatus.CREATED);
+		return new ResponseEntity<LibraryBranch>(HttpStatus.CREATED);
 	}
 	
 	//Update a record
-	@PutMapping("/branchId/{branchId}/branchName/{name}/branchAddress/{address}")
+	@PutMapping("/branchId/{branchId}/branchName/{branchName}/branchAddress/{branchAddress}")
 	public ResponseEntity<?> updateBranch(@RequestBody LibraryBranch branch) {
 		
 		boolean checkId = branService.ifExists(branch.getBranchId());
 		
 		if(checkId == true) {
 			branService.updateBranch(branch);
-			return new ResponseEntity<LibraryBranch>(branch, HttpStatus.OK);
+			return new ResponseEntity<LibraryBranch>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity<LibraryBranch>(branch, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<LibraryBranch>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class LibraryBranchController {
 			branService.deleteBranch(branch);
 			return new ResponseEntity<LibraryBranch>(HttpStatus.NO_CONTENT);
 		}else {
-			return new ResponseEntity<LibraryBranch>(branch, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<LibraryBranch>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

@@ -34,7 +34,7 @@ public class AuthorController {
 	public ResponseEntity<?> insertAuthor(@RequestBody Author author) {
 		
 		authorService.insertAuthor(author);
-		return new ResponseEntity<Author>(author, HttpStatus.CREATED);
+		return new ResponseEntity<Author>(HttpStatus.CREATED);
 	}
 	
 	//Update a record
@@ -45,9 +45,9 @@ public class AuthorController {
 		
 		if(checkId == true) {
 			authorService.updateAuthor(author);
-			return new ResponseEntity<Author>(author, HttpStatus.OK);
+			return new ResponseEntity<Author>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity<Author>(author, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Author>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class AuthorController {
 			authorService.deleteAuthor(author);
 			return new ResponseEntity<Author>(HttpStatus.NO_CONTENT);
 		}else {
-			return new ResponseEntity<Author>(author, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Author>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
